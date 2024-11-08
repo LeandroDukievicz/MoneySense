@@ -1,9 +1,17 @@
 import Image from "next/image";
+import { redirect } from "next/navigation";
+import { auth } from "@clerk/nextjs/server";
 import { Button } from "../_components/ui/button";
 import { LogInIcon } from "lucide-react";
 import { SignInButton } from "@clerk/nextjs";
 
-const LoginPage = () => {
+const LoginPage = async () => {
+  const { userId } = await auth();
+
+  if (userId) {
+    redirect("/");
+  }
+
   return (
     <div className="grid h-full grid-cols-2">
       <div className="mx-auto flex h-full max-w-[570px] flex-col justify-center p-8">
